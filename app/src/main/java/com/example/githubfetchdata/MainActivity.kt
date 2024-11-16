@@ -4,10 +4,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.safeDrawingPadding
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.LaunchedEffect
 import com.example.compose.GitHubFetchDataTheme
-import com.example.githubfetchdata.ui.helloPage.Hello
+import com.example.githubfetchdata.data.api.Client
+import com.example.githubfetchdata.data.api.UserRepositoryImpl
+import com.example.githubfetchdata.domain.UserRepository
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,7 +16,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             GitHubFetchDataTheme {
-                Hello(modifier = Modifier.safeDrawingPadding())
+                LaunchedEffect(Unit) {
+                    val userRepository = UserRepositoryImpl(Client()).getUserData("Jassem_sendi")
+                    println("User Data: "+userRepository)
+                }
             }
         }
     }
